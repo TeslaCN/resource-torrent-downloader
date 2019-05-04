@@ -5,17 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-    <table>
-        <thead>
-        <tr>
-            <th>Title</th>
-        </tr>
-        </thead>
-        <tbody>
-            <tr th:each="item : ${items}">
-                <td th:text="${item.title}"></td>
-            </tr>
-        </tbody>
-    </table>
+<form action="/search" method="get">
+    <label for="search"></label>
+    <input id="search" name="key">
+    <input type="submit">
+</form>
+<table>
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Tags</th>
+        <th>Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${items}">
+        <td th:text="${item.category}"></td>
+        <td th:text="${item.tags}"></td>
+        <td>
+            <a target="_blank" th:text="${item.title}" th:href="'/attachments?urn=' + ${item.urn}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

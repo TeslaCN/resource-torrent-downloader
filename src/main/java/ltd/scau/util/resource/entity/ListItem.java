@@ -19,6 +19,18 @@ public class ListItem {
 
     private ThreadType threadType;
 
+    @Override
+    public String toString() {
+        return "ListItem{" +
+                "urn='" + urn + '\'' +
+                ", id=" + id +
+                ", category='" + category + '\'' +
+                ", tags=" + tags +
+                ", title='" + title + '\'' +
+                ", threadType=" + threadType +
+                '}';
+    }
+
     public String getUrn() {
         return urn;
     }
@@ -57,5 +69,13 @@ public class ListItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public ThreadType getThreadType() {
+        return threadType;
+    }
+
+    public void setThreadType(ThreadType threadType) {
+        this.threadType = threadType;
     }
 }

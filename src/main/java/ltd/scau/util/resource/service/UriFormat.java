@@ -16,4 +16,11 @@ public interface UriFormat {
      * @return
      */
     String format(String urn);
+
+    /**
+     * @param key
+     * @param page
+     * @return
+     */
+    String formatSearch(String key, Integer page);
 }

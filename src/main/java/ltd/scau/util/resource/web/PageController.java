@@ -6,6 +6,7 @@ import ltd.scau.util.resource.repository.TorrentRepository;
 import ltd.scau.util.resource.service.Packager;
 import ltd.scau.util.resource.service.PageParser;
 import ltd.scau.util.resource.service.UriFormat;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,6 +53,11 @@ public class PageController {
         ModelAndView view = new ModelAndView("list");
         view.addObject("items", pageParser.parseList(httpClient.get(targetUri)));
         return view;
+    }
+
+    @GetMapping("/search")
+    public String search(String key, Integer page) throws UnsupportedEncodingException {
+        return String.format("forward:/list?urn=%s", uriFormat.formatSearch(URLEncoder.encode(key, CharEncoding.UTF_8), page));
     }
 
     @GetMapping("/attachments")

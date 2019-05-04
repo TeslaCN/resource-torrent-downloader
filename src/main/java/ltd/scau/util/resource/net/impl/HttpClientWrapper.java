@@ -15,7 +15,6 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * @author Weijie Wu
@@ -26,9 +25,17 @@ public class HttpClientWrapper implements HttpClient {
     private Executor executor;
 
     public HttpClientWrapper() {
-        HttpHost proxy = new HttpHost("127.0.0.1", 1087);
-        CloseableHttpClient httpClient = HttpClients.custom().setProxy(proxy).build();
-        executor = Executor.newInstance(httpClient);
+        String httpProxy = System.getProperty("httpProxy");
+        if (httpProxy == null) {
+            executor = Executor.newInstance();
+        } else {
+            String[] strings = httpProxy.split(":");
+            String host = strings[0];
+            int port = Integer.valueOf(strings[1]);
+            HttpHost proxy = new HttpHost(host, port);
+            CloseableHttpClient httpClient = HttpClients.custom().setProxy(proxy).build();
+            executor = Executor.newInstance(httpClient);
+        }
     }
 
     @Override
